@@ -167,14 +167,16 @@ class Exporter(object):
         if device.actualTemperature:
             self.metric_temperature_actual.labels(room=room, device_label=device.label).set(device.actualTemperature)
 
-        if device.setPointTemperature:
+        if "setPointTemperature" in dir(device):
             self.metric_temperature_setpoint.labels(room=room, device_label=device.label).set(device.setPointTemperature)
 
         if device.humidity:
             self.metric_humidity_actual.labels(room=room, device_label=device.label).set(device.humidity)
         logging.info(
-            "room: {}, label: {}, temperature_actual: {}, temperature_setpoint: {}, humidity_actual: {}"
-            .format(room, device.label, device.actualTemperature, device.setPointTemperature, device.humidity)
+            #"room: {}, label: {}, temperature_actual: {}, temperature_setpoint: {}, humidity_actual: {}"
+            "room: {}, label: {}, temperature_actual: {}, humidity_actual: {}"
+            .format(room, device.label, device.actualTemperature, device.humidity)
+            #.format(room, device.label, device.actualTemperature, device.setPointTemperature, device.humidity)
         )
 
     def __collect_heating_metrics(self, room, device):
